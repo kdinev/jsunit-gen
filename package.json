@@ -1,0 +1,11 @@
+{
+  "name": "jsunit-gen",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^2.1.5"
+  }
+}
