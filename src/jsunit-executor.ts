@@ -1,8 +1,8 @@
 import { AssertProvider } from './jsunit-assert';
 
 interface ExecutorConfig {
-	beforeExecute: Function,
-	beforeInstance: Function
+	beforeExecute: Function;
+	beforeInstance: Function;
 }
 
 export class Executor {
