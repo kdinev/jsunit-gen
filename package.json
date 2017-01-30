@@ -2,10 +2,16 @@
   "name": "jsunit-gen",
   "version": "0.0.1",
   "license": "MIT",
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/kdinev/jsunit-gen.git"
+  },
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+	"test": "tslint src/**/*.ts --fix"
   },
   "devDependencies": {
+    "tslint": "^4.4.2",
     "typescript": "^2.1.5"
   }
 }

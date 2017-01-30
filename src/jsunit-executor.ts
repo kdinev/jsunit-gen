@@ -1,37 +1,57 @@
-import { AssertProvider } from './jsunit-assert';
+import { AssertProvider } from "./jsunit-assert";
+import { DataGenDescriptor } from "./jsunit-typegen";
 
 interface ExecutorConfig {
 	beforeExecute: Function;
 	beforeInstance: Function;
 }
 
+interface ExecutionResult {
+	actual: any;
+	expected: any;
+}
+
+interface ExecutionInstance {
+	input: any;
+	output: ExecutionResult;
+}
+
 export class Executor {
 	private _config: ExecutorConfig;
 	private _provider: AssertProvider = new AssertProvider();
+	private _descriptor: DataGenDescriptor;
 
-	constructor (config: ExecutorConfig = null) {
+	constructor(config: ExecutorConfig = null, descriptor: DataGenDescriptor) {
 		this._config = config;
+		this._descriptor = descriptor;
 	}
 
-	public execute(testee: Function, testeeContext: any, tester: Function, testerContext: any, data: Array<any>): void {
-		//this._config.beforeExecute.apply(this, [testee, data]);
+	public execute(): void {
+		// this._config.beforeExecute.apply(this, [testee, data]);
 
-		data.forEach((member) => {
-			//this._config.beforeInstance.apply(this, [testee, member]);
+		this._descriptor.testData.forEach((member) => {
+			// this._config.beforeInstance.apply(this, [testee, member]);
 
-			this.executeInstance(testee, testeeContext, tester, testerContext, member);
+			this.executeInstance(member);
 		});
 	}
 
-	public executeInstance(testee: Function, testeeContext: any, tester: Function, testerContext: any, dataMember: any): void {
-		let expected = tester.apply(testerContext, [dataMember]), 
-			actual;
+	public executeInstance(dataMember: any): void {
+		const result: ExecutionResult = {
+			actual: "",
+			expected: this._descriptor.tester.apply(this._descriptor.testerContext, [dataMember])
+		};
+		const execinstance: ExecutionInstance = {
+			input: dataMember,
+			output: result
+		};
+
 		try {
-			actual = testee.apply(testeeContext, [dataMember]);
+			result.actual = this._descriptor.testee.apply(this._descriptor.testeeContext, [dataMember]);
 		} catch (error) {
-			throw new Error(error);
+			result.actual = error;
 		}
 
-		this._provider.invoke([actual, expected]);
+		this._provider.invoke([result.actual, result.expected]);
 	}
 }

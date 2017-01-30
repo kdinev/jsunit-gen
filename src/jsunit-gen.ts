@@ -1,13 +1,13 @@
-import { DataGen } from './jsunit-typegen';
-import { Executor } from './jsunit-executor';
+import { Executor } from "./jsunit-executor";
+import { DataGen } from "./jsunit-typegen";
 
-export class JSUnitGen {
+export class JSUnit {
 	private _executor: Executor;
 	constructor() {
-		this._executor = new Executor();
+		return;
 	}
 
-	public testMethod(method: Function, paramTypes: Array<string>, inputSetSize: number, tester: Function) : void {
-		
-	}
-};
+	// public testMethod(method: Function, paramTypes: string[], inputSetSize: number, tester: Function) : void {
+
+	// }
+}

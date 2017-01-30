@@ -1,0 +1,10 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+	  "indent": "tabs",
+	  "variable-name": "allow-leading-underscore",
+	  "interface-name": "never-prefix",
+	  "trailing-comma": "never",
+	  "no-bitwise": false
+  }
+}
