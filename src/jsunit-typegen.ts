@@ -1,4 +1,3 @@
-import { error } from 'util';
 import { writeFile } from "fs";
 import { ParamType } from "./jsunit-enums";
 
