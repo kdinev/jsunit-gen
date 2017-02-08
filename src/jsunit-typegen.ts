@@ -1,12 +1,14 @@
+import { error } from 'util';
+import { writeFile } from "fs";
 import { ParamType } from "./jsunit-enums";
 
 export interface DataGenDescriptor {
-	testee: Function;
-	testeeContext: any;
-	tester: Function;
-	testerContext: any;
+	subject: Function;
 	paramTypes: ParamType[];
-	testData: any[];
+	/*
+	@Ignore
+	*/
+	testData?: any[];
 }
 
 export class DataGen {
@@ -14,8 +16,8 @@ export class DataGen {
 	private _subject: DataGenDescriptor;
 
 	constructor(subject: DataGenDescriptor, size: number = 250000) {
-		this._size = size;
 		this._subject = subject;
+		this._size = size;
 	}
 
 	public getSubject(): DataGenDescriptor {
@@ -27,9 +29,9 @@ export class DataGen {
 	}
 
 	public generateCases(): void {
-		this._subject.testData = new Array<any>();
+		this._subject.testData = [];
 		for (let i = 0; i < this._size; i++) {
-			const testcase = new Array<any>();
+			const testcase: any[] = [];
 			this._subject.paramTypes.forEach((param) => {
 				switch (param) {
 				case ParamType.Number:
@@ -83,6 +85,14 @@ export class DataGen {
 			return this.generateBorder(seed);
 		}
 		return new Date();
+	}
+
+	public export(fileName: string): void {
+		writeFile(fileName, JSON.stringify(this._subject), (error) => {
+			if (error) {
+				writeFile(fileName, error);
+			}
+		});
 	}
 
 	private fibonacci(size: number, negative: boolean = false, iter: number = 0, first: number = 1, second = 1): number {

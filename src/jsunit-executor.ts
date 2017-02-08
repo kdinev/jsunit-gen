@@ -16,12 +16,20 @@ interface ExecutionInstance {
 	output: ExecutionResult;
 }
 
+export interface ExecutorDescriptor {
+	testee: Function;
+	testeeContext: any;
+	tester: Function;
+	testerContext: any;
+	testData: any[];
+}
+
 export class Executor {
 	private _config: ExecutorConfig;
 	private _provider: AssertProvider = new AssertProvider();
-	private _descriptor: DataGenDescriptor;
+	private _descriptor: ExecutorDescriptor;
 
-	constructor(config: ExecutorConfig = null, descriptor: DataGenDescriptor) {
+	constructor(config: ExecutorConfig = null, descriptor: ExecutorDescriptor) {
 		this._config = config;
 		this._descriptor = descriptor;
 	}

@@ -3,14 +3,15 @@
   "version": "0.0.1",
   "license": "MIT",
   "repository": {
-	  "type": "git",
-	  "url": "https://github.com/kdinev/jsunit-gen.git"
+    "type": "git",
+    "url": "https://github.com/kdinev/jsunit-gen.git"
   },
   "scripts": {
     "tsc": "tsc",
-	"test": "tslint src/**/*.ts --fix"
+    "test": "tslint src/**/*.ts --fix"
   },
   "devDependencies": {
+    "@types/node": "^7.0.5",
     "tslint": "^4.4.2",
     "typescript": "^2.1.5"
   }

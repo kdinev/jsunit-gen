@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
-        "module": "system",
+        "module": "commonjs",
 		"target": "es5",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true
+		//"inlineSources": true 
     },
     "include": [
         "src/**/*"
