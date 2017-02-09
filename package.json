@@ -7,7 +7,7 @@
     "url": "https://github.com/kdinev/jsunit-gen.git"
   },
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "test": "tslint src/**/*.ts --fix"
   },
   "devDependencies": {

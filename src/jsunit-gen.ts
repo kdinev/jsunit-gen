@@ -6,8 +6,4 @@ export class JSUnit {
 	constructor() {
 		return;
 	}
-
-	// public testMethod(method: Function, paramTypes: string[], inputSetSize: number, tester: Function) : void {
-
-	// }
 }
