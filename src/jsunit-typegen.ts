@@ -8,7 +8,7 @@
 
 import { writeFile } from "fs";
 import { ParamType } from "./jsunit-enums";
-
+import { GenerateNumbers, IGenerateNumbers } from "./jsunit-strats";
 
 /**
  * Descriptor of the test subject data is going to be generated for.
@@ -35,6 +35,8 @@ export interface DataGenDescriptor {
 	 * The output of the generator.
 	 */
 	testData?: any[];
+
+	numberStrat?: IGenerateNumbers;
 }
 
 /**
@@ -63,6 +65,9 @@ export class DataGen {
 		if (!this._subject.dataSize) {
 			this._subject.dataSize = this._size;
 		}
+		if (!this._subject.numberStrat) {
+			this._subject.numberStrat = new GenerateNumbers();
+		}
 	}
 
 	/**
@@ -83,7 +88,7 @@ export class DataGen {
 			this._subject.paramTypes.forEach((param) => {
 				switch (param) {
 				case ParamType.Number:
-					testcase.push(this.generateNumber(i));
+					testcase.push(this.generateNumber(Math.floor(Math.random() * 9)));
 					break;
 				case ParamType.String:
 					testcase.push(this.generateString(i));
@@ -126,7 +131,7 @@ export class DataGen {
 		if (this.includeBorder && (seed % 11 === 0)) {
 			return this.generateBorder(seed);
 		}
-		return this.fibonacci(seed, (Math.floor(Math.random() * 10)) % 2 === 0);
+		return this._subject.numberStrat.execute(seed);
 	}
 
 	/**
@@ -161,27 +166,5 @@ export class DataGen {
 				writeFile(fileName, error);
 			}
 		});
-	}
-
-	/**
-	 * Returns the n-th fibonacci number.
-	 * @param size The requested fibonacci number.
-	 * @param negative Flags whether to return the number as negative.
-	 * @param iter The current iteration.
-	 * @param first The fibonacci number from two iterations ago.
-	 * @param second The fibonacci number from one iteration ago.
-	 */
-	private fibonacci(size: number, negative: boolean = false, first: number = 1, second = 1): number {
-		let iter = 0;
-		if (size === 0) {
-			return negative ? -1 : 1;
-		}
-		while (iter < size) {
-			const temp = second;
-			second = first + second;
-			first = temp;
-			iter++;
-		}
-		return negative ? 0 - (first + second) : first + second;
 	}
 }
